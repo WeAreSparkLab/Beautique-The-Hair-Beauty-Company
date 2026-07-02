@@ -1,0 +1,865 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Beautique The Hair & Beauty Company | Norwich</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💄</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --dark:       #0f0d0e;
+      --dark-2:     #1c1719;
+      --rose:       #c9a4b8;
+      --rose-light: #e8d4e0;
+      --gold:       #d4a96a;
+      --white:      #faf8f5;
+      --muted:      #9a8f97;
+      --radius:     4px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Inter", system-ui, sans-serif;
+      background: var(--white);
+      color: var(--dark);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 3rem;
+      background: transparent;
+      transition: background 0.4s, backdrop-filter 0.4s, border-color 0.4s;
+      border-bottom: 1px solid transparent;
+    }
+
+    nav.scrolled {
+      background: rgba(15, 13, 14, 0.85);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom-color: rgba(201, 164, 184, 0.15);
+    }
+
+    .nav-logo {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: rgba(250, 248, 245, 0.75);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: color 0.25s;
+    }
+
+    .nav-links a:hover { color: var(--rose-light); }
+
+    .nav-book {
+      font-size: 0.75rem !important;
+      font-weight: 600 !important;
+      color: var(--dark) !important;
+      background: var(--rose-light);
+      padding: 0.55rem 1.4rem;
+      border-radius: 100px;
+      transition: background 0.25s !important;
+    }
+
+    .nav-book:hover {
+      background: var(--rose) !important;
+      color: var(--white) !important;
+    }
+
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      background: var(--dark);
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201, 164, 184, 0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 80% 80%, rgba(212, 169, 106, 0.1) 0%, transparent 60%);
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+
+    .hero h1 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(3.5rem, 9vw, 8rem);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--white);
+      letter-spacing: -1px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.4s forwards;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--rose-light);
+    }
+
+    .hero-sub {
+      max-width: 480px;
+      margin: 1.8rem auto 0;
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(250, 248, 245, 0.6);
+      opacity: 0;
+      animation: fadeUp 0.9s 0.6s forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2.8rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.8s forwards;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 0.9rem 2.4rem;
+      background: var(--rose);
+      color: var(--dark);
+      border-radius: 100px;
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: background 0.25s, transform 0.25s;
+    }
+
+    .btn-primary:hover {
+      background: var(--rose-light);
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      display: inline-block;
+      padding: 0.9rem 2.4rem;
+      border: 1px solid rgba(250, 248, 245, 0.3);
+      color: var(--white);
+      border-radius: 100px;
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: border-color 0.25s, background 0.25s;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--rose);
+      background: rgba(201, 164, 184, 0.1);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(250,248,245,0.4);
+      font-size: 0.68rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 1s 1.2s forwards;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--rose), transparent);
+      animation: scrollPulse 2s infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    .section { padding: 7rem 2rem; }
+
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .label-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--rose);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .section-heading {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 300;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-heading em { font-style: italic; color: var(--rose); }
+
+    .intro-strip {
+      background: var(--dark-2);
+      padding: 4rem 2rem;
+    }
+
+    .intro-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+    }
+
+    .stat {
+      text-align: center;
+      border-right: 1px solid rgba(201, 164, 184, 0.15);
+    }
+
+    .stat:last-child { border-right: none; }
+
+    .stat-number {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: var(--rose-light);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+
+    .services-section { background: var(--white); }
+
+    .services-header {
+      max-width: 1100px;
+      margin: 0 auto 4rem;
+    }
+
+    .services-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: rgba(0,0,0,0.08);
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .svc {
+      background: var(--white);
+      padding: 2.8rem 2.4rem;
+      transition: background 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .svc::after {
+      content: "";
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 2px;
+      width: 0;
+      background: var(--rose);
+      transition: width 0.4s;
+    }
+
+    .svc:hover { background: #fdf7fb; }
+    .svc:hover::after { width: 100%; }
+
+    .svc-number {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 0.85rem;
+      color: var(--rose);
+      letter-spacing: 2px;
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    .svc h3 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-bottom: 0.75rem;
+    }
+
+    .svc p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+
+    .about-section { background: var(--dark); }
+
+    .about-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .about-content .section-heading { color: var(--white); }
+
+    .about-body {
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(250,248,245,0.65);
+      line-height: 1.9;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-visual { position: relative; height: 480px; }
+
+    .about-block { position: absolute; border-radius: 3px; }
+
+    .about-block-1 {
+      top: 0; left: 0; right: 15%; bottom: 15%;
+      background: linear-gradient(135deg, #2e1f2a, #3d2934);
+    }
+
+    .about-block-2 {
+      bottom: 0; right: 0;
+      width: 55%; height: 55%;
+      background: linear-gradient(135deg, rgba(201,164,184,0.25), rgba(201,164,184,0.08));
+      border: 1px solid rgba(201,164,184,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .about-block-2 blockquote {
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--rose-light);
+      line-height: 1.6;
+    }
+
+    .about-deco {
+      position: absolute;
+      top: 50%; left: 55%;
+      transform: translate(-50%, -50%);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 8rem;
+      font-style: italic;
+      color: rgba(201,164,184,0.12);
+      pointer-events: none;
+    }
+
+    .testimonials-section { background: var(--rose-light); }
+
+    .testimonials-inner { max-width: 1100px; margin: 0 auto; }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3.5rem;
+    }
+
+    .testimonial {
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(10px);
+      padding: 2.2rem;
+      border-radius: 3px;
+      border: 1px solid rgba(255,255,255,0.8);
+    }
+
+    .testimonial-stars { color: var(--gold); font-size: 0.9rem; letter-spacing: 3px; margin-bottom: 1rem; }
+
+    .testimonial-text {
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: #3a2d36;
+      line-height: 1.75;
+      margin-bottom: 1.4rem;
+    }
+
+    .testimonial-author { font-size: 0.75rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+
+    .contact-section { background: var(--dark-2); }
+
+    .contact-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .contact-left .section-heading { color: var(--white); }
+
+    .contact-desc {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: rgba(250,248,245,0.55);
+      line-height: 1.85;
+      margin-bottom: 3rem;
+    }
+
+    .contact-details { display: flex; flex-direction: column; gap: 1.8rem; }
+
+    .contact-detail-item { display: flex; gap: 1.2rem; align-items: flex-start; }
+
+    .detail-icon {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,164,184,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+    }
+
+    .detail-label { font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase; color: var(--rose); margin-bottom: 0.3rem; }
+
+    .detail-value { font-size: 0.92rem; color: rgba(250,248,245,0.8); line-height: 1.6; }
+
+    .detail-value a { color: inherit; text-decoration: none; transition: color 0.2s; }
+    .detail-value a:hover { color: var(--rose-light); }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+
+    .form-group label { font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(201,164,184,0.2);
+      border-radius: 3px;
+      padding: 0.85rem 1rem;
+      color: var(--white);
+      font-family: "Inter", sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.25s, background 0.25s;
+      -webkit-appearance: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--rose);
+      background: rgba(201,164,184,0.08);
+    }
+
+    .form-group select option { background: var(--dark-2); color: var(--white); }
+
+    .form-group textarea { resize: vertical; min-height: 110px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .form-submit {
+      margin-top: 0.5rem;
+      padding: 1rem 2rem;
+      background: var(--rose);
+      color: var(--dark);
+      border: none;
+      border-radius: 100px;
+      font-family: "Inter", sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.25s;
+      align-self: flex-start;
+    }
+
+    .form-submit:hover { background: var(--rose-light); transform: translateY(-2px); }
+
+    footer {
+      background: var(--dark);
+      padding: 3rem 2rem;
+      border-top: 1px solid rgba(201,164,184,0.12);
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-logo {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.3rem;
+      font-weight: 300;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--rose-light);
+    }
+
+    .footer-copy { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.5px; }
+
+    .footer-links { list-style: none; display: flex; gap: 2rem; }
+
+    .footer-links a {
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--rose-light); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 900px) {
+      .about-inner, .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .intro-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .stat { border-right: none; border-bottom: 1px solid rgba(201,164,184,0.15); padding-bottom: 2rem; }
+      .stat:last-child { border-bottom: none; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .about-visual { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.2rem; }
+      .nav-links { gap: 1.2rem; }
+      .nav-links li:not(:last-child) { display: none; }
+      .services-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="mainNav">
+    <a href="#" class="nav-logo">Beautique</a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#contact" class="nav-book">Book Now</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <p class="hero-eyebrow">Norwich's Premier Beauty Destination</p>
+    <h1>The Art of<br><em>Hair &amp; Beauty</em></h1>
+    <p class="hero-sub">Where elegance meets expertise. Experience luxury beauty treatments tailored entirely to you.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Book an Appointment</a>
+      <a href="#services" class="btn-ghost">Explore Services</a>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      Scroll
+    </div>
+  </section>
+
+  <div class="intro-strip">
+    <div class="intro-inner">
+      <div class="stat reveal">
+        <div class="stat-number">10+</div>
+        <div class="stat-label">Years of Excellence</div>
+      </div>
+      <div class="stat reveal">
+        <div class="stat-number">2K+</div>
+        <div class="stat-label">Happy Clients</div>
+      </div>
+      <div class="stat reveal">
+        <div class="stat-number">15+</div>
+        <div class="stat-label">Expert Treatments</div>
+      </div>
+    </div>
+  </div>
+
+  <section class="section services-section" id="services">
+    <div class="services-header reveal">
+      <span class="label-tag">What We Offer</span>
+      <h2 class="section-heading">Curated treatments<br>for <em>every occasion</em></h2>
+    </div>
+    <div class="services-grid">
+      <div class="svc reveal">
+        <span class="svc-number">01</span>
+        <h3>Hair Cutting &amp; Styling</h3>
+        <p>Precision cuts and blowouts tailored to your face shape, texture, and lifestyle.</p>
+      </div>
+      <div class="svc reveal">
+        <span class="svc-number">02</span>
+        <h3>Colour &amp; Highlights</h3>
+        <p>Balayage, ombre, full colour — crafted by colourists who treat hair as their canvas.</p>
+      </div>
+      <div class="svc reveal">
+        <span class="svc-number">03</span>
+        <h3>Nail Treatments</h3>
+        <p>Manicures, pedicures, gel overlays, and intricate nail art by skilled technicians.</p>
+      </div>
+      <div class="svc reveal">
+        <span class="svc-number">04</span>
+        <h3>Facials &amp; Skincare</h3>
+        <p>Personalised facial therapies that restore glow, balance, and lasting confidence.</p>
+      </div>
+      <div class="svc reveal">
+        <span class="svc-number">05</span>
+        <h3>Eyebrow &amp; Lash</h3>
+        <p>Tinting, shaping, lash lifts, and extensions for a perfectly polished finish.</p>
+      </div>
+      <div class="svc reveal">
+        <span class="svc-number">06</span>
+        <h3>Massage &amp; Wellness</h3>
+        <p>Deeply relaxing treatments to restore balance, ease tension, and renew your energy.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section about-section" id="about">
+    <div class="about-inner">
+      <div class="about-content">
+        <span class="label-tag reveal">Our Story</span>
+        <h2 class="section-heading reveal">Beauty is our<br><em>craft &amp; passion</em></h2>
+        <p class="about-body reveal">
+          Based in the heart of Norwich, Beautique was built on a single belief — that every client deserves to feel
+          extraordinary. Our team of skilled stylists and therapists bring artistry, expertise, and genuine care to
+          every treatment.
+        </p>
+        <p class="about-body reveal">
+          We use only premium, ethically sourced products and stay ahead of the latest techniques — so you always
+          leave looking and feeling your absolute best.
+        </p>
+        <a href="#contact" class="btn-primary reveal" style="margin-top:0.5rem;">Book a Consultation</a>
+      </div>
+      <div class="about-visual reveal">
+        <div class="about-block about-block-1"></div>
+        <div class="about-deco">B</div>
+        <div class="about-block about-block-2">
+          <blockquote>"Beauty begins the moment you decide to be yourself."</blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section testimonials-section">
+    <div class="testimonials-inner">
+      <div class="reveal">
+        <span class="label-tag" style="color:#a0647e;">Client Stories</span>
+        <h2 class="section-heading" style="color:#2a1a22;">Loved by our<br><em>community</em></h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial reveal">
+          <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="testimonial-text">"Absolutely incredible experience from start to finish. My hair has never looked so healthy and beautiful. I won't go anywhere else."</p>
+          <span class="testimonial-author">— Sophie M., Norwich</span>
+        </div>
+        <div class="testimonial reveal">
+          <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="testimonial-text">"The team at Beautique are genuine artists. My balayage exceeded every expectation. The salon itself is stunning too."</p>
+          <span class="testimonial-author">— Hannah R., Norfolk</span>
+        </div>
+        <div class="testimonial reveal">
+          <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="testimonial-text">"I came in for a facial and left feeling like a completely new person. The atmosphere is so calming and the therapist was wonderful."</p>
+          <span class="testimonial-author">— Charlotte T., Norwich</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section contact-section" id="contact">
+    <div class="contact-inner">
+      <div class="contact-left">
+        <span class="label-tag reveal">Get in Touch</span>
+        <h2 class="section-heading reveal">Ready to feel<br><em>your best?</em></h2>
+        <p class="contact-desc reveal">
+          Whether you are booking your first visit or returning for your next treatment, we are here to help. Reach out and we will get back to you promptly.
+        </p>
+        <div class="contact-details">
+          <div class="contact-detail-item reveal">
+            <div class="detail-icon">&#128205;</div>
+            <div>
+              <div class="detail-label">Location</div>
+              <div class="detail-value">Norwich, Norfolk<br>United Kingdom</div>
+            </div>
+          </div>
+          <div class="contact-detail-item reveal">
+            <div class="detail-icon">&#128336;</div>
+            <div>
+              <div class="detail-label">Opening Hours</div>
+              <div class="detail-value">Mon to Fri: 9am to 6pm<br>Saturday: 9am to 5pm<br>Sunday: Closed</div>
+            </div>
+          </div>
+          <div class="contact-detail-item reveal">
+            <div class="detail-icon">&#128222;</div>
+            <div>
+              <div class="detail-label">Phone</div>
+              <div class="detail-value"><a href="tel:+441603000000">01603 000 000</a></div>
+            </div>
+          </div>
+          <div class="contact-detail-item reveal">
+            <div class="detail-icon">&#9993;</div>
+            <div>
+              <div class="detail-label">Email</div>
+              <div class="detail-value"><a href="mailto:hello@beautique.co.uk">hello@beautique.co.uk</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form reveal" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" name="fname" placeholder="Jane" required />
+          </div>
+          <div class="form-group">
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" name="lname" placeholder="Smith" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="jane@example.com" required />
+        </div>
+        <div class="form-group">
+          <label for="service">Service</label>
+          <select id="service" name="service">
+            <option value="">Select a service...</option>
+            <option>Hair Cutting and Styling</option>
+            <option>Colour and Highlights</option>
+            <option>Nail Treatments</option>
+            <option>Facials and Skincare</option>
+            <option>Eyebrow and Lash</option>
+            <option>Massage and Wellness</option>
+            <option>Other / Not Sure</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">Message (optional)</label>
+          <textarea id="message" name="message" placeholder="Any questions or special requests..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Enquiry</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-logo">Beautique</span>
+      <p class="footer-copy">&copy; 2026 Beautique The Hair &amp; Beauty Company. All rights reserved.</p>
+      <p class="footer-copy">Built by <a href="https://www.wearesparklab.com/studio" target="_blank" rel="noopener noreferrer" style="color:var(--muted);text-decoration:underline;text-underline-offset:3px;transition:color 0.2s;" onmouseover="this.style.color='var(--rose-light)'" onmouseout="this.style.color='var(--muted)'">WeAreSparkLab</a></p>
+      <ul class="footer-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById("mainNav");
+    window.addEventListener("scroll", () => {
+      nav.classList.toggle("scrolled", window.scrollY > 60);
+    });
+
+    const reveals = document.querySelectorAll(".reveal");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add("visible"), i * 80);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector(".form-submit");
+      btn.textContent = "Sent! We will be in touch soon.";
+      btn.style.background = "#7ab88a";
+      btn.disabled = true;
+    }
+  </script>
+</body>
+</html>
